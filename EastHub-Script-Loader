@@ -1,7 +1,7 @@
 local Players = game:GetService("Players")
 local function kickYoungAccounts(player)
     if player.AccountAge < 30 then
-        player:Kick("Account is under 30 days, for safety please use an account over 30 days, Thanks - EastHub")
+        player:Kick("ANTI-BAN SYSTEM Game detected that your using an alt, this will increase the risk of being banned on main account!")
     end
 end
 for _, player in pairs(Players:GetPlayers()) do
