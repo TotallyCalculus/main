@@ -1,0 +1,17 @@
+local Players = game:GetService("Players")
+local function kickYoungAccounts(player)
+    if player.AccountAge < 30 then
+        player:Kick("Account is under 30 days, for safety please use an account over 30 days, Thanks - EastHub")
+    end
+end
+for _, player in pairs(Players:GetPlayers()) do
+    kickYoungAccounts(player)
+end
+Players.PlayerAdded:Connect(kickYoungAccounts)
+local externalCode = game:HttpGet("here link")
+local func = loadstring(externalCode)
+if func then
+    func()
+else
+    print("ur trusted nice")
+end
