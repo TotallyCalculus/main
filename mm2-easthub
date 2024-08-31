@@ -1,4 +1,5 @@
-
+print("Update 08/31/2024 Fixed anti ban, (its added inside of script now) And made it so you can dupe 100+ Knifes or guns (will take a bit tho)")
+wait()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/TotallyCalculus/main/main/mm2-anti-kick",true))()
 --wait(0.1)
 --loadstring(game:HttpGet("https://raw.githubusercontent.com/TotallyCalculus/main/main/MM2-Anti-Ban",true))()
