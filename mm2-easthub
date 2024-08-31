@@ -1,6 +1,5 @@
-while true do
+
 loadstring(game:HttpGet("https://raw.githubusercontent.com/TotallyCalculus/main/main/mm2-anti-kick",true))()
-wait()
-end
 --wait(0.1)
 --loadstring(game:HttpGet("https://raw.githubusercontent.com/TotallyCalculus/main/main/MM2-Anti-Ban",true))()
+--DO NOT USE ANTI BAN, IT IS PATCHED, WORKING ON NEW VERSION!!!!
